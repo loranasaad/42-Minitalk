@@ -1,35 +1,54 @@
-# Compiler & flags
+# **************************************************************************** #
+#                                   Makefile                                   #
+# **************************************************************************** #
+
 CC      := cc
-CFLAGS  := -Wall -Wextra -Werror -I include -I libft
+CFLAGS  := -Wall -Wextra -Werror -I include
 
-# Source and object files
-SRCS    := src/server/server_main.c
-OBJS    := src/server/server_main.o
+# ---------------------------------------------------------------- mandatory ---
+NAME_SERVER := server
+NAME_CLIENT := client
 
-# Executable name
-NAME    := server
+SRCS_SERVER := src/server/server_main.c src/common/utils.c
+SRCS_CLIENT := src/client/client_main.c src/common/utils.c
 
-# Default rule
-all: $(NAME)
+OBJS_SERVER := $(SRCS_SERVER:.c=.o)
+OBJS_CLIENT := $(SRCS_CLIENT:.c=.o)
 
-# Build libft first if needed
-$(NAME): $(OBJS)
-	$(MAKE) -C libft
-	$(CC) $(CFLAGS) $(OBJS) -Llibft -lft -o $(NAME)
+# ------------------------------------------------------------------ bonus ----
+SRCS_SERVER_BONUS := src/server/server_bonus.c src/common/utils_bonus.c
+SRCS_CLIENT_BONUS := src/client/client_bonus.c src/common/utils_bonus.c
 
-# Compile each .c to .o (depends on your headers)
-src/server/%.o: src/server/%.c include/minitalk.h libft/libft.h
+OBJS_SERVER_BONUS := $(SRCS_SERVER_BONUS:.c=.o)
+OBJS_CLIENT_BONUS := $(SRCS_CLIENT_BONUS:.c=.o)
+
+# ----------------------------------------------------------------- rules -----
+all: $(NAME_SERVER) $(NAME_CLIENT)
+
+$(NAME_SERVER): $(OBJS_SERVER)
+	$(CC) $(CFLAGS) $(OBJS_SERVER) -o $(NAME_SERVER)
+
+$(NAME_CLIENT): $(OBJS_CLIENT)
+	$(CC) $(CFLAGS) $(OBJS_CLIENT) -o $(NAME_CLIENT)
+
+bonus: $(NAME_SERVER)_bonus $(NAME_CLIENT)_bonus
+
+$(NAME_SERVER)_bonus: $(OBJS_SERVER_BONUS)
+	$(CC) $(CFLAGS) $(OBJS_SERVER_BONUS) -o $(NAME_SERVER)
+
+$(NAME_CLIENT)_bonus: $(OBJS_CLIENT_BONUS)
+	$(CC) $(CFLAGS) $(OBJS_CLIENT_BONUS) -o $(NAME_CLIENT)
+
+# generic compile rule
+src/%.o: src/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
-# Cleaning rules
 clean:
-	rm -f $(OBJS)
-	$(MAKE) -C libft clean
+	rm -f $(OBJS_SERVER) $(OBJS_CLIENT) $(OBJS_SERVER_BONUS) $(OBJS_CLIENT_BONUS)
 
 fclean: clean
-	rm -f $(NAME)
-	$(MAKE) -C libft fclean
+	rm -f $(NAME_SERVER) $(NAME_CLIENT)
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all bonus clean fclean re

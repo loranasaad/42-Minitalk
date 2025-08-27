@@ -6,7 +6,7 @@
 /*   By: loasaad <loasaad@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/25 12:31:11 by loasaad           #+#    #+#             */
-/*   Updated: 2025/08/26 21:55:59 by loasaad          ###   ########.fr       */
+/*   Updated: 2025/08/27 15:44:44 by loasaad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,6 @@ static	void	handler_server(int sig, siginfo_t *info, void *ucontext)
 		g_server.current_byte |= (1 << pos);
 		g_server.bit_index++;
 	}
-	if (info && info->si_pid > 0)
-		kill(info->si_pid, SIGUSR1);
 	if (g_server.bit_index == 8)
 	{
 		if (g_server.current_byte == 0)
@@ -44,6 +42,8 @@ static	void	handler_server(int sig, siginfo_t *info, void *ucontext)
 		g_server.bit_index = 0;
 		g_server.current_byte = 0;
 	}
+	if (info && info->si_pid > 0)
+		kill(info->si_pid, SIGUSR1);
 }
 static	void	server_sigactions(void)
 {

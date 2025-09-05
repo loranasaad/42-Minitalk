@@ -6,18 +6,18 @@
 /*   By: loasaad <loasaad@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 14:31:56 by loasaad           #+#    #+#             */
-/*   Updated: 2025/08/26 18:48:13 by loasaad          ###   ########.fr       */
+/*   Updated: 2025/09/05 14:24:44 by loasaad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINITALK_H
-# define MINITALK_H	
-# define INT_MAX	2147483647
-# define INT_MIN	(-2147483648)
+# define MINITALK_H
 
 # include <unistd.h>
 # include <stdlib.h>
 # include <signal.h>
+# include <sys/types.h>
+# include <limits.h>
 
 typedef struct s_server_state
 {
@@ -25,9 +25,8 @@ typedef struct s_server_state
 	int				bit_index;
 }					t_server_state;
 
-void	ft_putnbr_fd(int n, int fd);
-int		atoi_safe(const char *str, int *result);
-
-extern	t_server_state	g_server;
+void					ft_putnbr_fd(int n, int fd);
+int						atoi_safe(const char *str, int *result);
+extern t_server_state	g_server;
 
 #endif

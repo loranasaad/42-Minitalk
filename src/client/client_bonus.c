@@ -6,15 +6,15 @@
 /*   By: loasaad <loasaad@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/25 17:52:29 by loasaad           #+#    #+#             */
-/*   Updated: 2025/08/27 16:10:57 by loasaad          ###   ########.fr       */
+/*   Updated: 2025/09/05 13:33:52 by loasaad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk_bonus.h"
 
-t_client_state g_client;
+t_client_state	g_client;
 
-static	void	handler_client(int sig, siginfo_t *info, void *ucontext)
+static void	handler_client(int sig, siginfo_t *info, void *ucontext)
 {
 	(void)sig;
 	(void)info;
@@ -25,22 +25,21 @@ static	void	handler_client(int sig, siginfo_t *info, void *ucontext)
 
 static void	client_sigactions(void)
 {
-	struct sigaction sa;
-	
+	struct sigaction	sa;
+
 	sigemptyset(&sa.sa_mask);
-	sigaddset(&sa.sa_mask ,SIGUSR1);
+	sigaddset(&sa.sa_mask, SIGUSR1);
 	sa.sa_sigaction = handler_client;
 	sa.sa_flags = SA_SIGINFO;
 	if (sigaction(SIGUSR1, &sa, NULL) == -1)
 		exit(1);
 }
 
-
-static void send_char(pid_t pid, unsigned char c)
+static void	send_char(pid_t pid, unsigned char c)
 {
 	int	i;
-	int pos;
-	
+	int	pos;
+
 	i = 0;
 	write(1, "sending ", 8);
 	write(1, &c, 1);
@@ -61,7 +60,7 @@ static void send_char(pid_t pid, unsigned char c)
 	}
 }
 
-static void send_str(pid_t pid, unsigned char *str)
+static void	send_str(pid_t pid, unsigned char *str)
 {
 	while (*str)
 	{
@@ -77,7 +76,7 @@ int	main(int argc, char **argv)
 	int				temp;
 	pid_t			pid;
 	unsigned char	*str;
-	
+
 	if (argc != 3 || !atoi_safe(argv[1], &temp))
 		exit(1);
 	pid = (pid_t)temp;

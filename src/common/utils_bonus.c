@@ -6,7 +6,7 @@
 /*   By: loasaad <loasaad@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 15:23:42 by loasaad           #+#    #+#             */
-/*   Updated: 2025/08/26 19:10:51 by loasaad          ###   ########.fr       */
+/*   Updated: 2025/09/05 13:30:47 by loasaad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	ft_putnbr_fd(int n, int fd)
 static	int	skip_space_sign(const char *str, int *i)
 {
 	int	sign;
-	
+
 	while ((str[*i] <= 13 && str[*i] >= 9) || str[*i] == ' ')
 		(*i)++;
 	sign = 1;
@@ -62,7 +62,7 @@ int	atoi_safe(const char *str, int *result)
 	while (str[i] >= '0' && str[i] <= '9')
 	{
 		numb = (str[i] - '0') + (10 * numb);
-		if ((sign == 1 && numb > INT_MAX) || (sign == -1 && -numb < INT_MIN))
+		if ((sign == 1 && numb > INT_MAX) || (sign == -1 && - numb < INT_MIN))
 			return (0);
 		i++;
 	}

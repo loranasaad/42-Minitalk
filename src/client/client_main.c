@@ -6,17 +6,17 @@
 /*   By: loasaad <loasaad@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/25 17:52:29 by loasaad           #+#    #+#             */
-/*   Updated: 2025/08/26 18:43:20 by loasaad          ###   ########.fr       */
+/*   Updated: 2025/09/05 13:31:47 by loasaad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 
-static void send_char(pid_t pid, unsigned char c)
+static void	send_char(pid_t pid, unsigned char c)
 {
 	int	i;
-	int pos;
-	
+	int	pos;
+
 	i = 0;
 	while (i < 8)
 	{
@@ -30,7 +30,7 @@ static void send_char(pid_t pid, unsigned char c)
 	}
 }
 
-static void send_str(pid_t pid, unsigned char *str)
+static void	send_str(pid_t pid, unsigned char *str)
 {
 	while (*str)
 	{
@@ -45,7 +45,7 @@ int	main(int argc, char **argv)
 	int				temp;
 	pid_t			pid;
 	unsigned char	*str;
-	
+
 	if (argc != 3 || !atoi_safe(argv[1], &temp) || temp <= 0)
 		exit(1);
 	pid = (pid_t)temp;

@@ -6,13 +6,13 @@
 /*   By: loasaad <loasaad@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/25 12:31:11 by loasaad           #+#    #+#             */
-/*   Updated: 2025/08/26 18:55:30 by loasaad          ###   ########.fr       */
+/*   Updated: 2025/09/05 13:27:07 by loasaad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 
-t_server_state g_server;
+t_server_state	g_server;
 
 static	void	init_server_state(void)
 {
@@ -44,12 +44,13 @@ static	void	handler_server(int sig, siginfo_t *info, void *ucontext)
 		g_server.current_byte = 0;
 	}
 }
-static	void	server_sigactions(void)
+
+static void	server_sigactions(void)
 {
-	struct sigaction sa;
-	int	rc1;
-	int	rc2;
-	
+	struct sigaction	sa;
+	int					rc1;
+	int					rc2;
+
 	sigemptyset(&sa.sa_mask);
 	sigaddset(&sa.sa_mask, SIGUSR1);
 	sigaddset(&sa.sa_mask, SIGUSR2);
@@ -63,13 +64,13 @@ static	void	server_sigactions(void)
 		exit(1);
 	}
 }
+
 int	main(void)
 {
 	ft_putnbr_fd(getpid(), 1);
 	write(1, "\n", 1);
 	init_server_state();
 	server_sigactions();
-	
 	while (1)
 	{
 		pause();
